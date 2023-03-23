@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <link rel="stylesheet" href="style.css">
+        <title>Sample site</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <SCRIPT language="javascript">
+         function addRow(tableID) {
+            var table = document.getElementById(tableID);
+            var rowCount = table.rows.length;
+            if(document.getElementById("input-1").value != "")
+            {
+            var row = table.insertRow(rowCount);
+            //Column 1
+            var cell1 = row.insertCell(0);
+            var element1 = document.createElement("input");
+            element1.type = "button";
+            element1.className ="btn-delete";
+            var btnName = "button" + (rowCount + 1);
+            element1.name = btnName;
+            element1.setAttribute('value', 'Delete');
+            element1.onclick = function () { removeRow(btnName); }
+            cell1.appendChild(element1);
+            //Column 2
+            var cell2 = row.insertCell(1);
+            var element2= document.createElement("input");
+            element2.type = "button";
+            element2.className ="btn-finish";
+            var btnName = "button" + (rowCount + 1);
+            element2.name = btnName;
+            element2.setAttribute('value', 'Finish');
+            element2.onclick = function () { finishRow(btnName); }
+            cell2.appendChild(element2);
+            //Column 3
+            var cell3 = row.insertCell(2);
+            var element3 = document.createElement("input");
+            element3.type = "text";
+            element3.id ="input-text-field"
+            element3.value = document.getElementById("input-1").value;
+            document.getElementById("input-1").value = "";
+            cell3.appendChild(element3);
+            rowCount = rowCount + 1;
+            }
+            else{
+                alert('Plesae enter a value in input field');
+            }
+        }
+        function removeRow(btnName) {
+            try {
+                var table = document.getElementById('dataTable');
+                var rowCount = table.rows.length;
+                for (var i = 0; i < rowCount; i++) {
+                    var row = table.rows[i];
+                    var rowObj = row.cells[0].childNodes[0];
+                    if (rowObj.name == btnName) {
+                        table.deleteRow(i);
+                        rowCount--;
+                    }
+                }
+            }
+            catch (e) {
+                alert(e);
+            }
+        }
+        function finishRow(btnName) {
+            try {
+                var table = document.getElementById('dataTable');
+                var rowCount = table.rows.length;
+                for (var i = 0; i < rowCount; i++) {
+                    var row = table.rows[i];
+                    var rowObj = row.cells[1].childNodes[0];
+                    if (rowObj.name == btnName) {
+                        if(row.cells[2].childNodes[0].style.textDecoration=="none")
+                        {
+                            row.cells[2].childNodes[0].style.textDecoration ='line-through';
+                            flag = "true";
+                        }
+                        else{
+                            row.cells[2].childNodes[0].style.textDecoration ='none';
+                            flag = "false";
+                        }
+                    }
+                    }
+                }
+            catch (e) {
+                alert(e);
+            }
+        }
+</SCRIPT>
+    </head>
+    <body>
+        <center>
+            <h2 style="color: aliceblue;">Todo App</h2>
+            <div>
+                <div class="Input">
+                    <input autocomplete="off" type="text" id="input-1" class="Input-text" placeholder="Input task">
+                    <label for="input" class="Input-label">Input task</label>
+                  </div>
+                <button class="btn" type="button" onclick="addRow('dataTable')"> Add </button>
+            <center>
+                <TABLE id="dataTable" width="350px" style="border: 1px solid transparent">
+               </TABLE>
+            </center>
+            </div>
+        </center>
+
+    </body>
+</html>
