@@ -24,5 +24,5 @@ jobs:
         aws-region: ${{ env.REGION }}
         
         - name: Host static website 
-        run: aws s3 sync ://{demo-sample28}
+        run: aws s3 sync ./build s3://{demo-sample28}
         
