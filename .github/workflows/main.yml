@@ -24,7 +24,7 @@ jobs:
           
 
       - name: Deploy website 
-        uses: cloudfront12/s3-sync-action@v2
+       - uses: cloudfront12/s3-sync-action@v2
            with:
             bucket: ${{ secrets.S3_BUCKET }}
             dist-id: ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }}
