@@ -22,7 +22,7 @@ jobs:
     - name: Deploy to S3 Bucket
       run: aws s3 sync ./ s3://demo-sample28
 
-    - name: Invalidate Cloudfront CDN
+    - name:  Cloudfront 
       run: aws cloudfront create-invalidation --distribution-id=$CLOUDFRONT_DISTRIBUTION_ID --paths '/*'
       env:
         CLOUDFRONT_DISTRIBUTION_ID: E3QI7IU55NNY3H
