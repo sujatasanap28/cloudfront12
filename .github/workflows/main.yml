@@ -1,28 +1,18 @@
-name: host static web
-on:
-  push:
-    branches: [ main ]
+name: Example workflow for S3 Deploy
+on: 
+push:
+branches : [ main ]
 jobs:
-  build-and-deploy:
-    name: Build and Deploy
-    runs-on: ubuntu-latest
-    env:
-      BUCKET: <demo-sample28>
-      DIST: build
-      REGION: us-east-2
-      DIST_ID: <E3QI7IU55NNY3H>
-
-    steps:
-    - name: Checkout
-      uses: actions/checkout@v2
-
-    - name: Configure AWS Credentials
-      uses: aws-actions/configure-aws-credentials@v1
-      with:
-        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        aws-region: ${{ env.REGION }}
-        
-        - name: Host static website 
-        run: aws s3 sync ./build s3://{demo-sample28}
-        
+  run:
+    runs-on: ubuntu-latest
+    env:
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      AWS_DEFAULT_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
+    steps:
+        - uses: actions/checkout@v2
+        - name: deploy
+          uses: aws-actions/S3-deploy@v2
+          with:
+            bucket: ${{ secrets.S3_BUCKET }}
+            dist-id: ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }}
