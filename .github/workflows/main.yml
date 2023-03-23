@@ -8,6 +8,11 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+   
+    env:
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      AWS_DEFAULT_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
 
     steps:
       - name: Checkout code
@@ -16,8 +21,11 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt-get update && sudo apt-get install -y awscli
+          
 
-      - name: Deploy website
-        run: |
-          aws s3 sync . s3://demo-sample28 --delete
-          aws cloudfront create-invalidation --distribution-id E3QI7IU55NNY3H --paths "/*"
+      - name: Deploy website 
+        uses: cloudfront12/s3-sync-action@v2
+           with:
+            bucket: ${{ secrets.S3_BUCKET }}
+            dist-id: ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }}
+            
