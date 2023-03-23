@@ -10,10 +10,10 @@ jobs:
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       AWS_DEFAULT_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
     steps:
-        - uses: actions/checkout@v1
+        - uses: actions/checkout@v2
 
         - name: deploy
-          uses: aws-actions/S3-deploy@v1
+          uses: cloudfront12/S3-sync-action@v0.5.1
           with:
             bucket: ${{ secrets.S3_BUCKET }}
             dist-id: ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }}
